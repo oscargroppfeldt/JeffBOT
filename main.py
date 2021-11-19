@@ -1,3 +1,10 @@
+"""
+Emils version, för att leka runt
+
+"""
+
+
+
 import discord
 from discord.ext import commands
 import os
