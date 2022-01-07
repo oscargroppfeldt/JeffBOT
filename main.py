@@ -221,25 +221,25 @@ async def leaderboard(ctx):
 		1. {user_1}, {time_1}\
 		2. {user_2}, {time_2}\
 		3. {user_3}, {time_3}\n".format(\
-			user_1 = members_sorted_tot_time.keys()[0], time_1 = members_sorted_tot_time.items()[0],\
-			user_2 = members_sorted_tot_time.keys()[1], time_2 = members_sorted_tot_time.items()[1],\
-			user_3 = members_sorted_tot_time.keys()[2], time_3 = members_sorted_tot_time.items()[2])
+			user_1 = list(members_sorted_tot_time.keys())[0], time_1 = list(members_sorted_tot_time.items())[0],\
+			user_2 = list(members_sorted_tot_time.keys())[1], time_2 = list(members_sorted_tot_time.items())[1],\
+			user_3 = list(members_sorted_tot_time.keys())[2], time_3 = list(members_sorted_tot_time.items())[2])
 
 	message_avg_time = "____ Fyrkantiga ögon ____\n \
 		1. {user_1}, {time_1}\
 		2. {user_2}, {time_2}\
 		3. {user_3}, {time_3}\n".format(\
-			user_1 = members_sorted_avg_time.keys()[0], time_1 = members_sorted_avg_time.items()[0],\
-			user_2 = members_sorted_avg_time.keys()[1], time_2 = members_sorted_avg_time.items()[1],\
-			user_3 = members_sorted_avg_time.keys()[2], time_3 = members_sorted_avg_time.items()[2])
+			user_1 = list(members_sorted_avg_time.keys())[0], time_1 = list(members_sorted_avg_time.items())[0],\
+			user_2 = list(members_sorted_avg_time.keys())[1], time_2 = list(members_sorted_avg_time.items())[1],\
+			user_3 = list(members_sorted_avg_time.keys())[2], time_3 = list(members_sorted_avg_time.items())[2])
 
 	message_afk_num = "____ \"BRB runka\" ____\n \
 		1. {user_1}, {time_1}\
 		2. {user_2}, {time_2}\
 		3. {user_3}, {time_3}\n".format(\
-			user_1 = members_sorted_afk_num.keys()[0], time_1 = members_sorted_afk_num.items()[0],\
-			user_2 = members_sorted_afk_num.keys()[1], time_2 = members_sorted_afk_num.items()[1],\
-			user_3 = members_sorted_afk_num.keys()[2], time_3 = members_sorted_afk_num.items()[2])
+			user_1 = list(members_sorted_afk_num.keys())[0], time_1 = list(members_sorted_afk_num.items())[0],\
+			user_2 = list(members_sorted_afk_num.keys())[1], time_2 = list(members_sorted_afk_num.items())[1],\
+			user_3 = list(members_sorted_afk_num.keys())[2], time_3 = list(members_sorted_afk_num.items())[2])
 			
 	message_to_send = message_tot_time + "\n" + message_avg_time + "\n" + message_afk_num
 	await ctx.send(message_to_send)
