@@ -32,7 +32,10 @@ class MemberStat:
 		self.num_of_afk = 0
 		self.last_join_time = 0
 		self.messages_sent = 0
-		self.user_str = self.member.name.split('#')[0]
+		if(not isinstance(member, str)):
+			self.user_str = self.member.name.split('#')[0]
+		else:
+			self.user_str = "Dummy"
 	
 	def on_join(self):
 		self.times_joined += 1
@@ -75,6 +78,9 @@ async def on_ready():
 	user_stats[1234567890].time_spent_in_discord_seconds = 420
 	user_stats[1234567891].time_spent_in_discord_seconds = 666
 	user_stats[1234567892].time_spent_in_discord_seconds = 1337
+	user_stats[1234567890].user_str = "Dummy Smith"
+	user_stats[1234567891].user_str = "Dummy Berenstein"
+	user_stats[1234567892].user_str = "Dummy Jonson"
 
 
 # Check if joining user has been bonked since their last connection
@@ -215,31 +221,30 @@ async def leaderboard(ctx):
 	members_sorted_tot_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].time_spent_in_discord_seconds)}
 	members_sorted_avg_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].avg_time_per_session_seconds)}
 	members_sorted_afk_num = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].num_of_afk)}
-	# Debug
-	print(members_sorted_avg_time)
+	
 	message_tot_time = "____ Trogna nördar ____\n \
-		1. {user_1}, {time_1}\
-		2. {user_2}, {time_2}\
+		1. {user_1}, {time_1}\n\
+		2. {user_2}, {time_2}\n\
 		3. {user_3}, {time_3}\n".format(\
-			user_1 = list(members_sorted_tot_time.items())[0].user_str, time_1 = list(members_sorted_tot_time.items())[0].time_spent_in_discord_seconds,\
-			user_2 = list(members_sorted_tot_time.items())[1].user_str, time_2 = list(members_sorted_tot_time.items())[1].time_spent_in_discord_seconds,\
-			user_3 = list(members_sorted_tot_time.items())[2].user_str, time_3 = list(members_sorted_tot_time.items())[2].time_spent_in_discord_seconds)
+			user_1 = list(members_sorted_tot_time.values())[2].user_str, time_1 = list(members_sorted_tot_time.values())[2].time_spent_in_discord_seconds,\
+			user_2 = list(members_sorted_tot_time.values())[1].user_str, time_2 = list(members_sorted_tot_time.values())[1].time_spent_in_discord_seconds,\
+			user_3 = list(members_sorted_tot_time.values())[0].user_str, time_3 = list(members_sorted_tot_time.values())[0].time_spent_in_discord_seconds)
 
 	message_avg_time = "____ Fyrkantiga ögon ____\n \
-		1. {user_1}, {time_1}\
-		2. {user_2}, {time_2}\
+		1. {user_1}, {time_1}\n\
+		2. {user_2}, {time_2}\n\
 		3. {user_3}, {time_3}\n".format(\
-			user_1 = list(members_sorted_avg_time.items())[0].user_str, time_1 = list(members_sorted_avg_time.items())[0].avg_time_per_session_seconds,\
-			user_2 = list(members_sorted_avg_time.items())[1].user_str, time_2 = list(members_sorted_avg_time.items())[1].avg_time_per_session_seconds,\
-			user_3 = list(members_sorted_avg_time.items())[2].user_str, time_3 = list(members_sorted_avg_time.items())[2].avg_time_per_session_seconds)
+			user_1 = list(members_sorted_avg_time.values())[2].user_str, time_1 = list(members_sorted_avg_time.values())[2].avg_time_per_session_seconds,\
+			user_2 = list(members_sorted_avg_time.values())[1].user_str, time_2 = list(members_sorted_avg_time.values())[1].avg_time_per_session_seconds,\
+			user_3 = list(members_sorted_avg_time.values())[0].user_str, time_3 = list(members_sorted_avg_time.values())[0].avg_time_per_session_seconds)
 
 	message_afk_num = "____ \"BRB runka\" ____\n \
-		1. {user_1}, {time_1}\
-		2. {user_2}, {time_2}\
+		1. {user_1}, {time_1}\n\
+		2. {user_2}, {time_2}\n\
 		3. {user_3}, {time_3}\n".format(\
-			user_1 = list(members_sorted_afk_num.items())[0].user_str, time_1 = list(members_sorted_afk_num.items())[0].num_of_afk,\
-			user_2 = list(members_sorted_afk_num.items())[1].user_str, time_2 = list(members_sorted_afk_num.items())[1].num_of_afk,\
-			user_3 = list(members_sorted_afk_num.items())[2].user_str, time_3 = list(members_sorted_afk_num.items())[2].num_of_afk)
+			user_1 = list(members_sorted_afk_num.values())[2].user_str, time_1 = list(members_sorted_afk_num.values())[2].num_of_afk,\
+			user_2 = list(members_sorted_afk_num.values())[1].user_str, time_2 = list(members_sorted_afk_num.values())[1].num_of_afk,\
+			user_3 = list(members_sorted_afk_num.values())[0].user_str, time_3 = list(members_sorted_afk_num.values())[0].num_of_afk)
 			
 	message_to_send = message_tot_time + "\n" + message_avg_time + "\n" + message_afk_num
 	await ctx.send(message_to_send)
