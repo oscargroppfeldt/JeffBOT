@@ -10,6 +10,7 @@ intents.typing = False
 intents.presences = False
 intents.members = True
 intents.voice_states = True
+intents.messages = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 TOKEN = os.environ['TOKEN']
@@ -26,20 +27,38 @@ class MemberStat:
 	def __init__(self, member):
 		self.member = member
 		self.times_joined = 0
-		self.time_spent_in_discord = 0
-		self.avg_time_per_session_minutes = 0
+		self.time_spent_in_discord_seconds = 0
+		self.avg_time_per_session_seconds = 0
 		self.num_of_afk = 0
 		self.last_join_time = 0
+		self.messages_sent = 0
 	
 	def on_join(self):
 		self.times_joined += 1
 
 
 	def __str__(self):
+		user_str = self.member.name.split('#')[0]
+		time_lst = seconds_converter(self.time_spent_in_discord_seconds)
+		time_str = f"{time_lst[2]} timmar, {time_lst[1]} minuter, {time_lst[0]} sekunder"
 		
-		return
+		self.avg_time_per_session_seconds = self.times_joined / self.time_spent_in_discord_seconds
+		
+		time_lst_avg = seconds_converter(self.avg_time_per_session_seconds)
+		time_avg_str = f"{time_lst_avg[2]} timmar, {time_lst_avg[1]} minuter, {time_lst_avg[0]} sekunder"
 
 
+
+		return f"Statistik för {user_str}:\nTotal tid i voice: {time_str}\nDet motsvarar ett snitt på {time_avg_str} per session \
+				\nGått afk {self.num_of_afk} gånger\nSkickat {self.messages_sent} meddelanden"
+
+def seconds_converter(seconds):
+	seconds = seconds % (24 * 3600)
+	hours = seconds // 3600
+	seconds %= 3600
+	minutes = seconds // 60
+	seconds %= 60
+	return[seconds, minutes, hours]
 
 @bot.event
 async def on_ready():
@@ -47,6 +66,15 @@ async def on_ready():
 	print(bot.user.name)
 	print(bot.user.id)
 	print('------')
+	user_stats[1234567890] = MemberStat("Dummy Jonson")
+	user_stats[1234567891] = MemberStat("Dummy Berenstein")
+	user_stats[1234567892] = MemberStat("Dummy Smith")
+	user_stats[1234567890].avg_time_per_session_seconds = 666
+	user_stats[1234567891].avg_time_per_session_seconds = 1337
+	user_stats[1234567892].avg_time_per_session_seconds = 420
+	user_stats[1234567890].time_spent_in_discord_seconds = 420
+	user_stats[1234567891].time_spent_in_discord_seconds = 666
+	user_stats[1234567892].time_spent_in_discord_seconds = 1337
 
 
 # Check if joining user has been bonked since their last connection
@@ -79,7 +107,7 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		stats.num_of_afk += 1
 		afk_time = time.time()
 		time_delta = afk_time - stats.last_join_time
-		stats.time_spent_in_discord += time_delta
+		stats.time_spent_in_discord_seconds += time_delta
 
 	elif before.afk and after.channel is not None:
 		stats = user_stats[user.id]
@@ -87,7 +115,12 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		join_time = time.time()
 		stats.last_join_time = join_time
 
-
+@bot.event
+async def on_message(msg):
+	user = msg.author
+	if not user.id == bot.id and not msg.is_system():
+		stats = user_stats[user.id]
+		stats.messages_sent += 1
 
 
 @bot.command()
@@ -175,7 +208,43 @@ async def addAlias(ctx, user: discord.Member, arg: str):
 async def stats(ctx, user: discord.Member):
 
 	stats = user_stats[user.id]
-	await ctx.send(f"{str(user).split('#')[0]} har varit i denna discord hela {stats.time_spent_in_discord} och gått afk {stats.num_of_afk} gånger.")
+	await ctx.send(stats.__str__())
+
+@bot.command()
+async def leaderboard(ctx):
+	members_sorted_tot_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[0].time_spent_in_discord_seconds)}
+	members_sorted_avg_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[0].avg_time_per_session_seconds)}
+	members_sorted_afk_num = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[0].num_of_afk)}
+	# Debug
+	print(members_sorted_avg_time)
+	message_tot_time = "____ Trogna nördar ____\n \
+		1. {user_1}, {time_1}\
+		2. {user_2}, {time_2}\
+		3. {user_3}, {time_3}\n".format(\
+			user_1 = members_sorted_tot_time.keys()[0], time_1 = members_sorted_tot_time.items()[0],\
+			user_2 = members_sorted_tot_time.keys()[1], time_2 = members_sorted_tot_time.items()[1],\
+			user_3 = members_sorted_tot_time.keys()[2], time_3 = members_sorted_tot_time.items()[2])
+
+	message_avg_time = "____ Fyrkantiga ögon ____\n \
+		1. {user_1}, {time_1}\
+		2. {user_2}, {time_2}\
+		3. {user_3}, {time_3}\n".format(\
+			user_1 = members_sorted_avg_time.keys()[0], time_1 = members_sorted_avg_time.items()[0],\
+			user_2 = members_sorted_avg_time.keys()[1], time_2 = members_sorted_avg_time.items()[1],\
+			user_3 = members_sorted_avg_time.keys()[2], time_3 = members_sorted_avg_time.items()[2])
+
+	message_afk_num = "____ \"BRB runka\" ____\n \
+		1. {user_1}, {time_1}\
+		2. {user_2}, {time_2}\
+		3. {user_3}, {time_3}\n".format(\
+			user_1 = members_sorted_afk_num.keys()[0], time_1 = members_sorted_afk_num.items()[0],\
+			user_2 = members_sorted_afk_num.keys()[1], time_2 = members_sorted_afk_num.items()[1],\
+			user_3 = members_sorted_afk_num.keys()[2], time_3 = members_sorted_afk_num.items()[2])
+			
+	message_to_send = message_tot_time + "\n" + message_avg_time + "\n" + message_afk_num
+	await ctx.send(message_to_send)
+	
+
 
 
 bot.run(TOKEN)
