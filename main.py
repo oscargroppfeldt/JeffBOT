@@ -212,9 +212,9 @@ async def stats(ctx, user: discord.Member):
 
 @bot.command()
 async def leaderboard(ctx):
-	members_sorted_tot_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[0].time_spent_in_discord_seconds)}
-	members_sorted_avg_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[0].avg_time_per_session_seconds)}
-	members_sorted_afk_num = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[0].num_of_afk)}
+	members_sorted_tot_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].time_spent_in_discord_seconds)}
+	members_sorted_avg_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].avg_time_per_session_seconds)}
+	members_sorted_afk_num = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].num_of_afk)}
 	# Debug
 	print(members_sorted_avg_time)
 	message_tot_time = "____ Trogna nördar ____\n \
