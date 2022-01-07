@@ -3,7 +3,7 @@ from discord.ext import commands
 import os
 import youtube_dl
 import time
-                                         
+                       
 
 intents = discord.Intents.default()
 intents.typing = False
@@ -23,13 +23,19 @@ knownUserAlias = {}
 user_stats = {}
 
 class MemberStat:
-
-	def __init__(self, member, times_joined = 0, time_spent_in_discord = 0.0, num_of_afk = 0, last_join = 0):
-		self.times_joined = times_joined
-		self.time_spent_in_discord = time_spent_in_discord
-		self.num_of_afk = num_of_afk
-		self.last_join = last_join
+	def __init__(self, member):
 		self.member = member
+		self.times_joined = 0
+		self.time_spent_in_discord = 0
+		self.avg_time_per_session_minutes = 0
+		self.num_of_afk = 0
+		self.last_join_time = 0
+	
+	def on_join(self):
+		self.times_joined += 1
+
+
+	
 
 
 @bot.event
@@ -49,53 +55,34 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		return
 
 	if before.channel is None:
-		print("join")
 		if user in bonk_lst:
 			bonk(user.Guild.system_channel, user)
-		
-		join_time = time.time()
 
-		if not user in user_stats:
-			print("hej")
-			new_user = MemberStat(user, 1, join_time)
+	if before.channel is None and not after.afk:
+
+		if not user.id in user_stats:
+			new_user = MemberStat(user)
 			user_stats[user.id] = new_user
-			return
+			stats = new_user
+		else:
+			stats = user_stats[user.id]
+
+		stats.times_joined += 1
+		join_time = time.time()
+		stats.last_join_time = join_time
+	
+	elif before.channel is not None and after.afk:
+		stats = user_stats[user.id]
+		stats.num_of_afk += 1
+		afk_time = time.time()
+		time_delta = afk_time - stats.last_join_time
+		stats.time_spent_in_discord += time_delta
+
+	elif before.channel is before.Guild.afk_channel and after.channel is not None:
 		stats = user_stats[user.id]
 		stats.times_joined += 1
-		stats.last_join = join_time
-	
-	elif before.channel is not None and after.afk is True:
-		pass
-
-
-
-@bot.event
-async def on_member_remove(user: discord.Member):
-	leave_time = time.time()
-	stats = user_stats[user.id]
-	time_delta = leave_time - stats.last_join
-	stats.time_spent_in_discord += time_delta
-	print("lämnade")
-
-
-@bot.event
-async def on_member_state_update(before, after):
-	print("update")
-	user = before
-	ctx = user.ctx
-	if before.channel is not None:
-		stats = user_stats[user.id]
-		if before.channel is ctx.Guild.afk_channel:
-			print("lämnade afk")
-			join_time = time.time()
-			stats.last_join = join_time
-
-		elif after.channel is ctx.Guild.afk_channel:
-			print("gick afk")
-			stats.num_of_afk += 1
-			afk_time = time.time()
-			time_delta = afk_time - stats.last_join
-			stats.time_spent_in_discord += time_delta
+		join_time = time.time()
+		stats.last_join_time = join_time
 
 
 @bot.command()
@@ -181,11 +168,9 @@ async def addAlias(ctx, user: discord.Member, arg: str):
 
 @bot.command()
 async def stats(ctx, user: discord.Member):
-	"""
+
 	stats = user_stats[user]
 	await ctx.send(f"{str(user).split('#')[0]} har varit i denna discord hela {stats.time_spent_in_discord} och gått afk {stats.num_of_afk} gånger")
-	"""
-	print(user_stats)
 
 
 bot.run(TOKEN)
