@@ -35,7 +35,10 @@ class MemberStat:
 		self.times_joined += 1
 
 
-	
+	def __str__(self):
+		
+		return
+
 
 
 @bot.event
@@ -78,11 +81,13 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		time_delta = afk_time - stats.last_join_time
 		stats.time_spent_in_discord += time_delta
 
-	elif before.channel is before.Guild.afk_channel and after.channel is not None:
+	elif before.afk and after.channel is not None:
 		stats = user_stats[user.id]
 		stats.times_joined += 1
 		join_time = time.time()
 		stats.last_join_time = join_time
+
+
 
 
 @bot.command()
@@ -169,8 +174,8 @@ async def addAlias(ctx, user: discord.Member, arg: str):
 @bot.command()
 async def stats(ctx, user: discord.Member):
 
-	stats = user_stats[user]
-	await ctx.send(f"{str(user).split('#')[0]} har varit i denna discord hela {stats.time_spent_in_discord} och gått afk {stats.num_of_afk} gånger")
+	stats = user_stats[user.id]
+	await ctx.send(f"{str(user).split('#')[0]} har varit i denna discord hela {stats.time_spent_in_discord} och gått afk {stats.num_of_afk} gånger.")
 
 
 bot.run(TOKEN)
