@@ -40,23 +40,26 @@ class MemberStat:
 	def on_join(self):
 		self.times_joined += 1
 
+	def update_user_time(self):
+		current_time = time.time()
+		time_delta = current_time - self.last_join_time
+		self.last_join_time = current_time
+		self.time_spent_in_discord_seconds += time_delta
+
 
 	def __str__(self):
 		time_lst = seconds_converter(self.time_spent_in_discord_seconds)
-		time_str = f"{time_lst[2]} timmar, {time_lst[1]} minuter, {time_lst[0]} sekunder"
+		time_str = f"{time_lst[2]} timmar, {time_lst[1]} minuter, {int(time_lst[0])} sekunder"
 		
-		self.avg_time_per_session_seconds = self.times_joined / self.time_spent_in_discord_seconds
+		self.avg_time_per_session_seconds =  self.time_spent_in_discord_seconds / self.times_joined 
 		
 		time_lst_avg = seconds_converter(self.avg_time_per_session_seconds)
-		time_avg_str = f"{time_lst_avg[2]} timmar, {time_lst_avg[1]} minuter, {time_lst_avg[0]} sekunder"
+		time_avg_str = f"{time_lst_avg[2]} timmar, {time_lst_avg[1]} minuter, {int(time_lst_avg[0])} sekunder"
 
 
-
-		return f"Statistik för {self.user_str}:\nTotal tid i voice: {time_str}\nDet motsvarar ett snitt på {time_avg_str} per session \
-				\nGått afk {self.num_of_afk} gånger\nSkickat {self.messages_sent} meddelanden"
+		return f"____Statistik för {self.user_str}____:\n\tTotal tid i voice:\n\t\t{time_str}\n\tEtt snitt på:\n\t\t{time_avg_str} per session\n\tGått afk:\n\t\t{self.num_of_afk} gång(er)\n\tSkickat {self.messages_sent} meddelanden"
 
 def seconds_converter(seconds):
-	seconds = seconds % (24 * 3600)
 	hours = seconds // 3600
 	seconds %= 3600
 	minutes = seconds // 60
@@ -124,14 +127,10 @@ async def on_voice_state_update(user: discord.Member, before, after):
 @bot.event
 async def on_message(msg):
 	user = msg.author
-	if not user.id == bot.id and not msg.is_system():
+	if not msg.is_system() and user.id is not bot.user.id:
 		stats = user_stats[user.id]
 		stats.messages_sent += 1
-
-
-@bot.command()
-async def test(ctx, arg="ful"):
-	await ctx.send(f"näe du är {arg}.")
+	await bot.process_commands(msg)
 
 def play_audio(ctx, song):
 	ydl_opts = {
@@ -210,11 +209,13 @@ async def addAlias(ctx, user: discord.Member, arg: str):
 
 
 
+# TODO: Uppdatera tidsstattistik för user
 @bot.command()
 async def stats(ctx, user: discord.Member):
-
 	stats = user_stats[user.id]
+	stats.update_user_time()
 	await ctx.send(stats.__str__())
+
 
 @bot.command()
 async def leaderboard(ctx):
