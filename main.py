@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 import youtube_dl
 import time
+import logger
                        
 
 intents = discord.Intents.default()
@@ -23,6 +24,10 @@ bonk_lst = []
 knownUserAlias = {}
 user_stats = {}
 
+
+log = logger.Logger
+log.initialize()
+
 class MemberStat:
 	def __init__(self, member):
 		self.member = member
@@ -32,14 +37,13 @@ class MemberStat:
 		self.num_of_afk = 0
 		self.last_join_time = 0
 		self.messages_sent = 0
+		self.last_stream_time = 0
+		self.time_spent_streaming = 0
 		if(not isinstance(member, str)):
 			self.user_str = self.member.name.split('#')[0]
 		else:
 			self.user_str = "Dummy"
 	
-	def on_join(self):
-		self.times_joined += 1
-
 
 	def __str__(self):
 		time_lst = seconds_converter(self.time_spent_in_discord_seconds)
@@ -72,12 +76,12 @@ async def on_ready():
 	user_stats[1234567890] = MemberStat("Dummy Jonson")
 	user_stats[1234567891] = MemberStat("Dummy Berenstein")
 	user_stats[1234567892] = MemberStat("Dummy Smith")
-	user_stats[1234567890].avg_time_per_session_seconds = 666
-	user_stats[1234567891].avg_time_per_session_seconds = 1337
-	user_stats[1234567892].avg_time_per_session_seconds = 420
-	user_stats[1234567890].time_spent_in_discord_seconds = 420
-	user_stats[1234567891].time_spent_in_discord_seconds = 666
-	user_stats[1234567892].time_spent_in_discord_seconds = 1337
+	user_stats[1234567890].avg_time_per_session_seconds = 1
+	user_stats[1234567891].avg_time_per_session_seconds = 2
+	user_stats[1234567892].avg_time_per_session_seconds = 3
+	user_stats[1234567890].time_spent_in_discord_seconds = 1
+	user_stats[1234567891].time_spent_in_discord_seconds = 2
+	user_stats[1234567892].time_spent_in_discord_seconds = 3
 	user_stats[1234567890].user_str = "Dummy Smith"
 	user_stats[1234567891].user_str = "Dummy Berenstein"
 	user_stats[1234567892].user_str = "Dummy Jonson"
@@ -87,6 +91,16 @@ async def on_ready():
 # and logs their stats
 @bot.event
 async def on_voice_state_update(user: discord.Member, before, after):
+
+	if not before.stream and after.stream:
+		time_stamp = time.time()
+		user_stats[user.id].last_stream_time = time_stamp
+
+	if not after.stream and before.stream:
+		stats = user_stats[user.id]
+		time_delta = stats.last_stream_time - time.time()
+		stats.time_spent_streaming += time_delta - time
+
 	# if the coroutine is activated for other reasons than a user moving voice-channel, ignore
 	if before.channel == after.channel:
 		return
@@ -211,10 +225,44 @@ async def addAlias(ctx, user: discord.Member, arg: str):
 
 
 @bot.command()
-async def stats(ctx, user: discord.Member):
+async def stats(ctx, *args : discord.Member):
+	if not args:
+		user = ctx.author
+		stats = user_stats[user.id]
+		await ctx.send(stats.__str__())
+	else:
+		for user in args:
+			stats = user_stats[user.id]
+			await ctx.send(stats.__str__())
 
-	stats = user_stats[user.id]
-	await ctx.send(stats.__str__())
+
+@bot.command()
+async def stat(ctx, stat, *args : discord.Member):
+	for user in args:
+		if not isinstance(user, discord.Member):
+			await ctx.send(f"{user} är inte en medlem i den här discorden\n(Stämmer inte detta? Skriv till Ogge att han är dum isf")
+			log.log("Error in !stat: {user} is not discord.Member")
+			continue
+		
+		usr_name = user.name.split('#')[0]
+		match stat:
+			case "stream":
+				stat = user_stats[user.id].time_spent_streaming
+				time = seconds_converter(stat)
+				await ctx.send(f"{usr_name} strömmat:\n{time[2]} timmar, {time[1]} minuter och {time[0]} sekunder")
+			case "msg":
+				stat = user_stats[user.id].messages_sent
+				await ctx.send(f"{usr_name} har skickat {stat} meddelanden")
+			case "time":
+				stat = user_stats[user.id].time_spent_in_discord_seconds
+				time = seconds_converter(stat)
+				await ctx.send(f"{usr_name} har hängt i discord i {time[2]} timmar, {time[1]} minuter och {time[0]} sekunder")
+			case _:
+				await ctx.send("Använd !stat stream/msg/time [användare]\nför tid streamad/ antal meddelanden/ tid i discord (ej afk tid) hos användarna")
+				return
+
+
+
 
 @bot.command()
 async def leaderboard(ctx):
