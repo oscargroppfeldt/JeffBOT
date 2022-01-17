@@ -44,6 +44,12 @@ class MemberStat:
 		else:
 			self.user_str = "Dummy"
 	
+	def update_user_time(self):
+		current_time = time.time()
+		time_delta = current_time - self.last_join_time
+		self.last_join_time = current_time
+		self.time_spent_in_discord_seconds += time_delta
+
 
 	def __str__(self):
 		time_lst = seconds_converter(self.time_spent_in_discord_seconds)
@@ -229,6 +235,7 @@ async def stats(ctx, *args : discord.Member):
 	if not args:
 		user = ctx.author
 		stats = user_stats[user.id]
+		stats.update_user_time()
 		await ctx.send(stats.__str__())
 	else:
 		for user in args:
@@ -255,6 +262,7 @@ async def stat(ctx, stat, *args : discord.Member):
 				await ctx.send(f"{usr_name} har skickat {stat} meddelanden")
 			case "time":
 				stat = user_stats[user.id].time_spent_in_discord_seconds
+				stats.update_user_time()
 				time = seconds_converter(stat)
 				await ctx.send(f"{usr_name} har hängt i discord i {time[2]} timmar, {time[1]} minuter och {time[0]} sekunder")
 			case _:
