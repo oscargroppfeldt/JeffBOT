@@ -3,3 +3,6 @@
 
 #ignore API key related files
 *.env
+
+#ignore sound files
+*.mp3
