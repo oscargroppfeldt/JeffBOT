@@ -148,11 +148,6 @@ async def on_message(msg):
 		stats = user_stats[user.id]
 		stats.messages_sent += 1
 
-
-@bot.command()
-async def test(ctx, arg="ful"):
-	await ctx.send(f"näe du är {arg}.")
-
 def play_audio(ctx, song):
 	ydl_opts = {
 			'format': 'bestaudio/best',
@@ -232,19 +227,28 @@ async def addAlias(ctx, user: discord.Member, arg: str):
 
 @bot.command()
 async def stats(ctx, *args : discord.Member):
+
+	log.log(f"{ctx.author} called !stats on {args}")
+
 	if not args:
 		user = ctx.author
 		stats = user_stats[user.id]
-		stats.update_user_time()
+		if user.voice is not None and not user.voice.afk:
+			stats.update_user_time()
 		await ctx.send(stats.__str__())
 	else:
 		for user in args:
 			stats = user_stats[user.id]
+			if user.voice is not None and not user.voice.afk:
+				stats.update_user_time()
 			await ctx.send(stats.__str__())
 
 
 @bot.command()
 async def stat(ctx, stat, *args : discord.Member):
+
+	log.log(f"{ctx.author} called !stat with stat {stat} on {args}")
+
 	for user in args:
 		if not isinstance(user, discord.Member):
 			await ctx.send(f"{user} är inte en medlem i den här discorden\n(Stämmer inte detta? Skriv till Ogge att han är dum isf")
@@ -261,8 +265,10 @@ async def stat(ctx, stat, *args : discord.Member):
 				stat = user_stats[user.id].messages_sent
 				await ctx.send(f"{usr_name} har skickat {stat} meddelanden")
 			case "time":
-				stat = user_stats[user.id].time_spent_in_discord_seconds
-				stats.update_user_time()
+				stats = user_stats[user.id]
+				if user.voice is not None and not user.voice.afk:
+					stats.update_user_time()
+				stat = stats.time_spent_in_discord_seconds
 				time = seconds_converter(stat)
 				await ctx.send(f"{usr_name} har hängt i discord i {time[2]} timmar, {time[1]} minuter och {time[0]} sekunder")
 			case _:
@@ -275,6 +281,9 @@ async def stat(ctx, stat, *args : discord.Member):
 
 @bot.command()
 async def leaderboard(ctx):
+
+	log.log(f"{ctx.author} called !leaderboard")
+
 	members_sorted_tot_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].time_spent_in_discord_seconds)}
 	members_sorted_avg_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].avg_time_per_session_seconds)}
 	members_sorted_afk_num = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].num_of_afk)}
