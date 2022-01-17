@@ -264,6 +264,7 @@ async def stat(ctx, stat, *args : discord.Member):
 
 
 
+
 @bot.command()
 async def leaderboard(ctx):
 	members_sorted_tot_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].time_spent_in_discord_seconds)}
