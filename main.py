@@ -56,7 +56,7 @@ class MemberStat:
 		attributes = [a for a in dir(self) if not a.startswith('__') and not callable(getattr(self, a))]
 		res = f"{self.member.id},\n"
 		for attr in attributes[1:]:
-			res += attr + ",\n"
+			res += str(attr) + ",\n"
 
 		return res
 	
@@ -270,7 +270,7 @@ async def stat(ctx, stat, *args : discord.Member):
 	for user in args:
 		if not isinstance(user, discord.Member):
 			await ctx.send(f"{user} är inte en medlem i den här discorden\n(Stämmer inte detta? Skriv till Ogge att han är dum isf")
-			log.log("Error in !stat: {user} is not discord.Member")
+			log.log(f"Error in !stat: {user} is not discord.Member")
 			continue
 		
 		usr_name = user.name.split('#')[0]
@@ -336,26 +336,28 @@ async def leaderboard(ctx):
 def read_stats():
 
 	with open("stats.txt", 'r') as stat_file:
-		contents = stat_file.read().split(',n')
+		contents = stat_file.read().split(',\n')
 		if contents % 9 != 0: log.log("Error when reading stat.csv")
 		for i in range(contents/9): #Every MemberStat has 9 attributes
 
 			# Get MemberStat attributes
 			discordMemberInstance = bot.get_user(contents[i])
 			user = MemberStat(discordMemberInstance)
-			user.times_joined = contents[i+1]
-			user.time_spent_in_discord_seconds = contents[i+2]
-			user.avg_time_per_session_seconds = contents[i+3]
-			user.num_of_afk = contents[i+4]
-			user.last_join_time = contents[i+5]
-			user.messages_sent = contents[i+6]
-			user.last_stream_time = contents[i+7]
-			user.time_spent_streaming = contents[i+8]
+			user.times_joined = int(contents[i+1])
+			user.time_spent_in_discord_seconds = int(contents[i+2])
+			user.avg_time_per_session_seconds = int(contents[i+3])
+			user.num_of_afk = int(contents[i+4])
+			user.last_join_time = int(contents[i+5])
+			user.messages_sent = int(contents[i+6])
+			user.last_stream_time = int(contents[i+7])
+			user.time_spent_streaming = int(contents[i+8])
 
 			user_stats[contents[i]] = user
 
 
-
+"""
+TODO: implement ability to force a save in order to update from git
+"""
 async def save_stats():
 	while True:
 		with open("stats.txt", 'w') as stat_file:
