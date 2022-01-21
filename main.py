@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import os
+import asyncio
 import youtube_dl
 import time
 import logger
@@ -28,6 +29,13 @@ user_stats = {}
 log = logger.Logger
 log.initialize()
 
+"""
+	TODO: 
+	Build system for updating saved statistics
+	Create system for updating bot from github during of-hours
+
+"""
+
 class MemberStat:
 	def __init__(self, member):
 		self.member = member
@@ -43,6 +51,14 @@ class MemberStat:
 			self.user_str = self.member.name.split('#')[0]
 		else:
 			self.user_str = "Dummy"
+
+	def get_user_stats_csv(self):
+		attributes = [a for a in dir(self) if not a.startswith('__') and not callable(getattr(self, a))]
+		res = f"{self.member.id},\n"
+		for attr in attributes[1:]:
+			res += attr + ",\n"
+
+		return res
 	
 	def update_user_time(self):
 		current_time = time.time()
@@ -91,6 +107,8 @@ async def on_ready():
 	user_stats[1234567890].user_str = "Dummy Smith"
 	user_stats[1234567891].user_str = "Dummy Berenstein"
 	user_stats[1234567892].user_str = "Dummy Jonson"
+	read_stats()
+	await save_stats()
 
 
 # Check if joining user has been bonked since their last connection
@@ -314,7 +332,38 @@ async def leaderboard(ctx):
 			
 	message_to_send = message_tot_time + "\n" + message_avg_time + "\n" + message_afk_num
 	await ctx.send(message_to_send)
-	
+
+def read_stats():
+
+	with open("stats.txt", 'r') as stat_file:
+		contents = stat_file.read().split(',n')
+		if contents % 9 != 0: log.log("Error when reading stat.csv")
+		for i in range(contents/9): #Every MemberStat has 9 attributes
+
+			# Get MemberStat attributes
+			discordMemberInstance = bot.get_user(contents[i])
+			user = MemberStat(discordMemberInstance)
+			user.times_joined = contents[i+1]
+			user.time_spent_in_discord_seconds = contents[i+2]
+			user.avg_time_per_session_seconds = contents[i+3]
+			user.num_of_afk = contents[i+4]
+			user.last_join_time = contents[i+5]
+			user.messages_sent = contents[i+6]
+			user.last_stream_time = contents[i+7]
+			user.time_spent_streaming = contents[i+8]
+
+			user_stats[contents[i]] = user
+
+
+
+async def save_stats():
+	while True:
+		with open("stats.txt", 'w') as stat_file:
+			for user in user_stats.values():
+				stat_file.write(user.get_user_stat_csv())
+
+		await asyncio.sleep(900_000) #sleep for 900s (15 min)
+
 
 
 
