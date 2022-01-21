@@ -6,3 +6,6 @@
 
 #ignore sound files
 *.mp3
+
+#ignore textfiles
+*.txt
