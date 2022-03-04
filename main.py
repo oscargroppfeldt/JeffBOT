@@ -27,7 +27,7 @@ user_stats = {}
 
 
 log = logger.Logger
-log.initialize()
+log.init()
 
 """
 	TODO: 
