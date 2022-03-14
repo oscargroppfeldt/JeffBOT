@@ -95,21 +95,9 @@ async def on_ready():
 	print(bot.user.name)
 	print(bot.user.id)
 	print('------')
-	user_stats[1234567890] = MemberStat("Dummy Jonson")
-	user_stats[1234567891] = MemberStat("Dummy Berenstein")
-	user_stats[1234567892] = MemberStat("Dummy Smith")
-	user_stats[1234567890].avg_time_per_session_seconds = 1
-	user_stats[1234567891].avg_time_per_session_seconds = 2
-	user_stats[1234567892].avg_time_per_session_seconds = 3
-	user_stats[1234567890].time_spent_in_discord_seconds = 1
-	user_stats[1234567891].time_spent_in_discord_seconds = 2
-	user_stats[1234567892].time_spent_in_discord_seconds = 3
-	user_stats[1234567890].user_str = "Dummy Smith"
-	user_stats[1234567891].user_str = "Dummy Berenstein"
-	user_stats[1234567892].user_str = "Dummy Jonson"
 	read_stats()
 	await save_stats()
-	print("ska vara klar")
+
 
 # Check if joining user has been bonked since their last connection
 # and logs their stats
