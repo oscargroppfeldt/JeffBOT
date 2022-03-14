@@ -109,7 +109,7 @@ async def on_ready():
 	user_stats[1234567892].user_str = "Dummy Jonson"
 	read_stats()
 	await save_stats()
-
+	print("ska vara klar")
 
 # Check if joining user has been bonked since their last connection
 # and logs their stats
@@ -338,8 +338,10 @@ def read_stats():
 
 	with open("stats.txt", 'r') as stat_file:
 		contents = stat_file.read().split(',\n')
-		if contents % 9 != 0: log.log("Error when reading stat.csv")
-		for i in range(contents/9): #Every MemberStat has 9 attributes
+		if len(contents) % 9 != 0:
+			log.log("Error when reading stat.csv")
+			return
+		for i in range(len(contents)/9): #Every MemberStat has 9 attributes
 
 			# Get MemberStat attributes
 			discordMemberInstance = bot.get_user(contents[i])
@@ -361,11 +363,12 @@ TODO: implement ability to force a save in order to update from git
 """
 async def save_stats():
 	while True:
-		with open("stats.txt", 'w') as stat_file:
+		with open("stats.txt", 'w+') as stat_file:
 			for user in user_stats.values():
-				stat_file.write(user.get_user_stat_csv())
+				stat_file.write(user.get_user_stats_csv())
+				log.log("Saved stats to file")
 
-		await asyncio.sleep(900_000) #sleep for 900s (15 min)
+		await asyncio.sleep(900) #sleep for 900s (15 min)
 
 
 
