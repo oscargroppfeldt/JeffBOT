@@ -18,7 +18,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 TOKEN = os.environ['TOKEN']
 
 SFXlst = {"milk" : "https://youtu.be/xfl31la4f2E?t=1", 
-		"bonk" :"https://www.youtube.com/watchv=gwxTZaa3NgIab_channel=YerBoiLloris",
+		"bonk" :"https://www.youtube.com/watch?v=gwxTZaa3NgI&ab_channel=YerBoiLloris",
 		"what" : "https://www.youtube.com/watch?v=pYaX22MTp8gab_channel=MemeSounds"}
 
 bonk_lst = []
@@ -26,7 +26,7 @@ knownUserAlias = {}
 user_stats = {}
 
 
-log = logger.Logger
+log = logger.Logger()
 log.init()
 
 """
@@ -71,7 +71,7 @@ class MemberStat:
 		time_lst = seconds_converter(self.time_spent_in_discord_seconds)
 		time_str = f"{time_lst[2]} timmar, {time_lst[1]} minuter, {time_lst[0]} sekunder"
 		
-		self.avg_time_per_session_seconds = self.times_joined / self.time_spent_in_discord_seconds
+		self.avg_time_per_session_seconds = self.time_spent_in_discord_seconds / self.times_joined
 		
 		time_lst_avg = seconds_converter(self.avg_time_per_session_seconds)
 		time_avg_str = f"{time_lst_avg[2]} timmar, {time_lst_avg[1]} minuter, {time_lst_avg[0]} sekunder"
@@ -116,11 +116,11 @@ async def on_ready():
 @bot.event
 async def on_voice_state_update(user: discord.Member, before, after):
 
-	if not before.stream and after.stream:
+	if not before.self_stream and after.self_stream:
 		time_stamp = time.time()
 		user_stats[user.id].last_stream_time = time_stamp
 
-	if not after.stream and before.stream:
+	if not after.self_stream and before.self_stream:
 		stats = user_stats[user.id]
 		time_delta = stats.last_stream_time - time.time()
 		stats.time_spent_streaming += time_delta - time
@@ -162,9 +162,10 @@ async def on_voice_state_update(user: discord.Member, before, after):
 @bot.event
 async def on_message(msg):
 	user = msg.author
-	if not user.id == bot.id and not msg.is_system():
+	if not user.bot and not msg.is_system():
 		stats = user_stats[user.id]
 		stats.messages_sent += 1
+	await bot.process_commands(msg)
 
 def play_audio(ctx, song):
 	ydl_opts = {
@@ -177,7 +178,7 @@ def play_audio(ctx, song):
 		}
 	
 
-	if not os.ospath.isfile(f"{song}.mp3"):
+	if not os.path.isfile(f"{song}.mp3"):
 		url = SFXlst[song]
 		with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 			ydl.download([url])

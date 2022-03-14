@@ -1,0 +1,536 @@
+Ignoring exception in on_ready
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 110, in on_ready
+    read_stats()
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 339, in read_stats
+    with open("stats.txt", 'r') as stat_file:
+FileNotFoundError: [Errno 2] No such file or directory: 'stats.txt'
+Logged in as
+JeffreyEpstein
+909533326199623781
+------
+Ignoring exception in on_ready
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 110, in on_ready
+    read_stats()
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 339, in read_stats
+    with open("stats.txt", 'r') as stat_file:
+FileNotFoundError: [Errno 2] No such file or directory: 'stats.txt'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 205, in bonk
+    if user.id == 138687184302637058 and ctx.message.author.id != 138687184302637058:
+AttributeError: 'NoneType' object has no attribute 'id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: 'NoneType' object has no attribute 'id'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 217, in bonk
+    play_audio(ctx, "bonk")
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 181, in play_audio
+    if not os.ospath.isfile(f"{song}.mp3"):
+AttributeError: module 'os' has no attribute 'ospath'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: module 'os' has no attribute 'ospath'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 215, in bonk
+    await ctx.author.voice.channel.connect()
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/abc.py", line 1274, in connect
+    raise ClientException('Already connected to a voice channel.')
+discord.errors.ClientException: Already connected to a voice channel.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: ClientException: Already connected to a voice channel.
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 205, in bonk
+    if user.id == 138687184302637058 and ctx.message.author.id != 138687184302637058:
+AttributeError: 'NoneType' object has no attribute 'id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: 'NoneType' object has no attribute 'id'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 215, in bonk
+    await ctx.author.voice.channel.connect()
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/abc.py", line 1274, in connect
+    raise ClientException('Already connected to a voice channel.')
+discord.errors.ClientException: Already connected to a voice channel.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: ClientException: Already connected to a voice channel.
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 215, in bonk
+    await ctx.author.voice.channel.connect()
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/abc.py", line 1274, in connect
+    raise ClientException('Already connected to a voice channel.')
+discord.errors.ClientException: Already connected to a voice channel.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: ClientException: Already connected to a voice channel.
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 789, in prepare
+    await self._parse_arguments(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 697, in _parse_arguments
+    transformed = await self.transform(ctx, param)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 542, in transform
+    raise MissingRequiredArgument(param)
+discord.ext.commands.errors.MissingRequiredArgument: user_str is a required argument that is missing.
+Ignoring exception in command stat:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 789, in prepare
+    await self._parse_arguments(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 713, in _parse_arguments
+    transformed = await self.transform(ctx, param)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 552, in transform
+    return await self.do_conversion(ctx, converter, argument, param)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 505, in do_conversion
+    return await self._actual_conversion(ctx, converter, argument, param)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 451, in _actual_conversion
+    ret = await instance.convert(ctx, argument)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/converter.py", line 195, in convert
+    raise MemberNotFound(argument)
+discord.ext.commands.errors.MemberNotFound: Member "ogge" not found.
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 208, in bonk
+    await bonk(ctx, new_bonk)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 374, in __call__
+    return await self.callback(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 217, in bonk
+    play_audio(ctx, "bonk")
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 181, in play_audio
+    if not os.ospath.isfile(f"{song}.mp3"):
+AttributeError: module 'os' has no attribute 'ospath'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: module 'os' has no attribute 'ospath'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 205, in bonk
+    if user.id == 138687184302637058 and ctx.message.author.id != 138687184302637058:
+AttributeError: 'NoneType' object has no attribute 'id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: 'NoneType' object has no attribute 'id'
+Traceback (most recent call last):
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 18, in <module>
+    TOKEN = os.environ['TOKEN']
+  File "/usr/local/lib/python3.10/os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'TOKEN'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 208, in bonk
+    await bonk(ctx, new_bonk)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 374, in __call__
+    return await self.callback(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 217, in bonk
+    play_audio(ctx, "bonk")
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 181, in play_audio
+    if not os.path.isfile(f"{song}.mp3"):
+AttributeError: module 'os' has no attribute 'ospath'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: module 'os' has no attribute 'ospath'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 215, in bonk
+    await ctx.author.voice.channel.connect()
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/abc.py", line 1274, in connect
+    raise ClientException('Already connected to a voice channel.')
+discord.errors.ClientException: Already connected to a voice channel.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: ClientException: Already connected to a voice channel.
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 217, in bonk
+    play_audio(ctx, "bonk")
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 181, in play_audio
+    if not os.path.isfile(f"{song}.mp3"):
+AttributeError: module 'os' has no attribute 'ospath'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: module 'os' has no attribute 'ospath'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 217, in bonk
+    play_audio(ctx, "bonk")
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 181, in play_audio
+    if not os.path.isfile(f"{song}.mp3"):
+AttributeError: module 'os' has no attribute 'ospath'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: module 'os' has no attribute 'ospath'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 217, in bonk
+    play_audio(ctx, "bonk")
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 181, in play_audio
+    if not os.path.isfile(f"{song}.mp3"):
+AttributeError: module 'os' has no attribute 'ospath'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: module 'os' has no attribute 'ospath'
+Ignoring exception in on_voice_state_update
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 126, in on_voice_state_update
+    stats.time_spent_streaming += time_delta - time
+TypeError: unsupported operand type(s) for -: 'float' and 'module'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 215, in bonk
+    await ctx.author.voice.channel.connect()
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/abc.py", line 1285, in connect
+    await voice.connect(timeout=timeout, reconnect=reconnect)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/voice_client.py", line 345, in connect
+    await utils.sane_wait_for(futures, timeout=timeout)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/utils.py", line 362, in sane_wait_for
+    raise asyncio.TimeoutError()
+asyncio.exceptions.TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: TimeoutError: 
+Ignoring exception in on_voice_state_update
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 126, in on_voice_state_update
+    stats.time_spent_streaming += time_delta - time
+TypeError: unsupported operand type(s) for -: 'float' and 'module'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 215, in bonk
+    await ctx.author.voice.channel.connect()
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/abc.py", line 1285, in connect
+    await voice.connect(timeout=timeout, reconnect=reconnect)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/voice_client.py", line 345, in connect
+    await utils.sane_wait_for(futures, timeout=timeout)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/utils.py", line 362, in sane_wait_for
+    raise asyncio.TimeoutError()
+asyncio.exceptions.TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: TimeoutError: 
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 217, in bonk
+    play_audio(ctx, "bonk")
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 181, in play_audio
+    if not os.path.isfile(f"{song}.mp3"):
+AttributeError: module 'os' has no attribute 'ospath'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: module 'os' has no attribute 'ospath'
+Logged in as
+JeffreyEpstein
+909533326199623781
+------
+Ignoring exception in on_ready
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 110, in on_ready
+    read_stats()
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 339, in read_stats
+    with open("stats.txt", 'r') as stat_file:
+FileNotFoundError: [Errno 2] No such file or directory: 'stats.txt'
+Logged in as
+JeffreyEpstein
+909533326199623781
+------
+Ignoring exception in on_ready
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 110, in on_ready
+    read_stats()
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 339, in read_stats
+    with open("stats.txt", 'r') as stat_file:
+FileNotFoundError: [Errno 2] No such file or directory: 'stats.txt'
+Ignoring exception in on_message
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 166, in on_message
+    stats = user_stats[user.id]
+KeyError: 138687184302637058
+Logged in as
+JeffreyEpstein
+909533326199623781
+------
+Ignoring exception in on_ready
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 110, in on_ready
+    read_stats()
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 339, in read_stats
+    with open("stats.txt", 'r') as stat_file:
+FileNotFoundError: [Errno 2] No such file or directory: 'stats.txt'
+Logged in as
+JeffreyEpstein
+909533326199623781
+------
+Traceback (most recent call last):
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 1, in <module>
+    import discord
+ModuleNotFoundError: No module named 'discord'
+Ignoring exception in on_ready
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 110, in on_ready
+    read_stats()
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 339, in read_stats
+    with open("stats.txt", 'r') as stat_file:
+FileNotFoundError: [Errno 2] No such file or directory: 'stats.txt'
+Ignoring exception in on_voice_state_update
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 126, in on_voice_state_update
+    stats.time_spent_streaming += time_delta - time
+TypeError: unsupported operand type(s) for -: 'float' and 'module'
+Ignoring exception in on_voice_state_update
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 126, in on_voice_state_update
+    stats.time_spent_streaming += time_delta - time
+TypeError: unsupported operand type(s) for -: 'float' and 'module'
+Ignoring exception in on_voice_state_update
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 126, in on_voice_state_update
+    stats.time_spent_streaming += time_delta - time
+TypeError: unsupported operand type(s) for -: 'float' and 'module'
+Ignoring exception in on_voice_state_update
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 126, in on_voice_state_update
+    stats.time_spent_streaming += time_delta - time
+TypeError: unsupported operand type(s) for -: 'float' and 'module'
+Ignoring exception in on_voice_state_update
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 126, in on_voice_state_update
+    stats.time_spent_streaming += time_delta - time
+TypeError: unsupported operand type(s) for -: 'float' and 'module'
+Exception in voice thread Thread-12
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/player.py", line 603, in run
+    self._do_run()
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/player.py", line 596, in _do_run
+    play_audio(data, encode=not self.source.is_opus())
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/voice_client.py", line 638, in send_audio_packet
+    self.socket.sendto(packet, (self.endpoint_ip, self.voice_port))
+OSError: [Errno 9] Bad file descriptor
+Ignoring exception in on_voice_state_update
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 126, in on_voice_state_update
+    stats.time_spent_streaming += time_delta - time
+TypeError: unsupported operand type(s) for -: 'float' and 'module'
+Ignoring exception in command bonk:
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/jeffbot/JeffBOT/./main.py", line 205, in bonk
+    if user.id == 138687184302637058 and ctx.message.author.id != 138687184302637058:
+AttributeError: 'NoneType' object has no attribute 'id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/.local/lib/python3.10/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: AttributeError: 'NoneType' object has no attribute 'id'
