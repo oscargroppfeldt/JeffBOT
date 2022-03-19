@@ -53,11 +53,15 @@ class MemberStat:
 			self.user_str = "Dummy"
 
 	def get_user_stats_csv(self):
-		attributes = [a for a in dir(self) if not a.startswith('__') and not callable(getattr(self, a))]
 		res = f"{self.member.id},\n"
-		for attr in attributes[1:]:
-			res += str(attr) + ",\n"
-
+		res += f"{self.times_joined},\n"
+		res += f"{self.time_spent_in_discord_seconds}\n"
+		res += f"{self.avg_time_per_session_seconds}\n"
+		res += f"{self.num_of_afk}\n"
+		res += f"{self.last_join_time}\n"
+		res += f"{self.messages_sent}\n"
+		res += f"{self.last_stream_time}\n"
+		res += f"{self.time_spent_streaming}\n"
 		return res
 	
 	def update_user_time(self):
@@ -82,12 +86,11 @@ class MemberStat:
 				\nGått afk {self.num_of_afk} gånger\nSkickat {self.messages_sent} meddelanden"
 
 def seconds_converter(seconds):
-	seconds = seconds % (24 * 3600)
 	hours = seconds // 3600
 	seconds %= 3600
 	minutes = seconds // 60
 	seconds %= 60
-	return[seconds, minutes, hours]
+	return[int(seconds), int(minutes), int(hours)]
 
 @bot.event
 async def on_ready():
@@ -134,7 +137,7 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		join_time = time.time()
 		stats.last_join_time = join_time
 	
-	elif before.channel is not None and after.afk:
+	elif before.channel is not None and after.afk or None:
 		stats = user_stats[user.id]
 		stats.num_of_afk += 1
 		afk_time = time.time()
@@ -146,6 +149,13 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		stats.times_joined += 1
 		join_time = time.time()
 		stats.last_join_time = join_time
+
+	elif not before.afk and after.channel is None:
+		stats = user_stats[user.id]
+		time_delta = time.time() - stats.last_join_time
+		stats.time_spent_in_discord_seconds += time_delta
+		
+
 
 @bot.event
 async def on_message(msg):
