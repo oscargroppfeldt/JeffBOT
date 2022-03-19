@@ -114,7 +114,7 @@ async def on_voice_state_update(user: discord.Member, before, after):
 	if not after.self_stream and before.self_stream:
 		stats = user_stats[user.id]
 		time_delta = stats.last_stream_time - time.time()
-		stats.time_spent_streaming += time_delta - time
+		stats.time_spent_streaming += time_delta
 
 	# if the coroutine is activated for other reasons than a user moving voice-channel, ignore
 	if before.channel == after.channel:
@@ -154,7 +154,7 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		stats = user_stats[user.id]
 		time_delta = time.time() - stats.last_join_time
 		stats.time_spent_in_discord_seconds += time_delta
-		
+
 
 
 @bot.event
