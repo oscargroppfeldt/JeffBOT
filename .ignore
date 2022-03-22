@@ -9,3 +9,5 @@
 
 #ignore textfiles
 *.txt
+
+*.out
