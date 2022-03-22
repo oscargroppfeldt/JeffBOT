@@ -113,7 +113,7 @@ async def on_voice_state_update(user: discord.Member, before, after):
 
 	if not after.self_stream and before.self_stream:
 		stats = user_stats[user.id]
-		time_delta = stats.last_stream_time - time.time()
+		time_delta = time.time() - stats.last_stream_time
 		stats.time_spent_streaming += time_delta
 
 	# if the coroutine is activated for other reasons than a user moving voice-channel, ignore
@@ -280,7 +280,7 @@ async def stat(ctx, stat, *args : discord.Member):
 			case "stream":
 				stat = user_stats[user.id].time_spent_streaming
 				time = seconds_converter(stat)
-				await ctx.send(f"{usr_name} strömmat:\n{time[2]} timmar, {time[1]} minuter och {time[0]} sekunder")
+				await ctx.send(f"{usr_name} har strömmat:\n{time[2]} timmar, {time[1]} minuter och {time[0]} sekunder")
 			case "msg":
 				stat = user_stats[user.id].messages_sent
 				await ctx.send(f"{usr_name} har skickat {stat} meddelanden")
