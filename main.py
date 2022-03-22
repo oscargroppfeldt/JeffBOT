@@ -306,33 +306,63 @@ async def leaderboard(ctx):
 
 	members_sorted_tot_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].time_spent_in_discord_seconds)}
 	members_sorted_avg_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].avg_time_per_session_seconds)}
+	members_sorted_str_time = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].time_spent_streaming)}
 	members_sorted_afk_num = {k: v for k, v in sorted(user_stats.items(), key = lambda item: item[1].num_of_afk)}
 	
+	users_tot = list(members_sorted_tot_time.values())[-3:]
+	users_avg = list(members_sorted_avg_time.values())[-3:]
+	users_str = list(members_sorted_str_time.values())[-3:]
+	users_afk = list(members_sorted_afk_num.values())[-3:]
+
+	# TOTAL TIME
+	time1 = seconds_converter(users_tot[-1].time_spent_in_discord_seconds)
+	time2 = seconds_converter(users_tot[-2].time_spent_in_discord_seconds)
+	time3 = seconds_converter(users_tot[-3].time_spent_in_discord_seconds)
+
 	message_tot_time = "____ Trogna nördar ____\n \
-		1. {user_1}, {time_1}\n\
-		2. {user_2}, {time_2}\n\
-		3. {user_3}, {time_3}\n".format(\
-			user_1 = list(members_sorted_tot_time.values())[2].user_str, time_1 = list(members_sorted_tot_time.values())[2].time_spent_in_discord_seconds,\
-			user_2 = list(members_sorted_tot_time.values())[1].user_str, time_2 = list(members_sorted_tot_time.values())[1].time_spent_in_discord_seconds,\
-			user_3 = list(members_sorted_tot_time.values())[0].user_str, time_3 = list(members_sorted_tot_time.values())[0].time_spent_in_discord_seconds)
+		1. {user_1}: {h} timmar och {m} minuter\n\
+		2. {user_2}: {h} timmar och {m} minuter\n\
+		3. {user_3}: {h} timmar och {m} minuter\n".format(\
+			user_1 = users_tot[-1].user_str, h = time1[2], m = time1[1],\
+			user_2 = users_tot[-2].user_str, h = time2[2], m = time2[1],\
+			user_3 = users_tot[-3].user_str, h = time3[2], m = time3[1])
+
+	# AVERAGE TIME
+	time1 = seconds_converter(users_avg[-1].avg_time_per_session_seconds)
+	time2 = seconds_converter(users_avg[-2].avg_time_per_session_seconds)
+	time3 = seconds_converter(users_avg[-3].avg_time_per_session_seconds)
 
 	message_avg_time = "____ Fyrkantiga ögon ____\n \
-		1. {user_1}, {time_1}\n\
-		2. {user_2}, {time_2}\n\
-		3. {user_3}, {time_3}\n".format(\
-			user_1 = list(members_sorted_avg_time.values())[2].user_str, time_1 = list(members_sorted_avg_time.values())[2].avg_time_per_session_seconds,\
-			user_2 = list(members_sorted_avg_time.values())[1].user_str, time_2 = list(members_sorted_avg_time.values())[1].avg_time_per_session_seconds,\
-			user_3 = list(members_sorted_avg_time.values())[0].user_str, time_3 = list(members_sorted_avg_time.values())[0].avg_time_per_session_seconds)
+		1. {user_1}: {h} timmar och {m} minuter\n\
+		2. {user_2}: {h} timmar och {m} minuter\n\
+		3. {user_3}: {h} timmar och {m} minuter\n".format(\
+			user_1 = users_avg[-1].user_str, h = time1[2], m = time1[1],\
+			user_2 = users_avg[-2].user_str, h = time2[2], m = time2[1],\
+			user_3 = users_avg[-3].user_str, h = time3[2], m = time3[1])
 
+	# STREAM TIME
+	time1 = seconds_converter(users_str[-1].time_spent_streaming)
+	time2 = seconds_converter(users_str[-2].time_spent_streaming)
+	time3 = seconds_converter(users_str[-3].time_spent_streaming)
+	
+	message_str_time = "____ Streamers ____\n \
+		1. {user_1}: {h} timmar och {m} minuter\n\
+		2. {user_2}: {h} timmar och {m} minuter\n\
+		3. {user_3}: {h} timmar och {m} minuter\n".format(\
+			user_1 = users_str[-1].user_str, h = time1[2], m = time1[1],\
+			user_2 = users_str[-2].user_str, h = time2[2], m = time2[1],\
+			user_3 = users_str[-3].user_str, h = time3[2], m = time3[1])
+
+	# NUM OF AFKS AND BONKS
 	message_afk_num = "____ \"BRB runka\" ____\n \
-		1. {user_1}, {time_1}\n\
-		2. {user_2}, {time_2}\n\
-		3. {user_3}, {time_3}\n".format(\
-			user_1 = list(members_sorted_afk_num.values())[2].user_str, time_1 = list(members_sorted_afk_num.values())[2].num_of_afk,\
-			user_2 = list(members_sorted_afk_num.values())[1].user_str, time_2 = list(members_sorted_afk_num.values())[1].num_of_afk,\
-			user_3 = list(members_sorted_afk_num.values())[0].user_str, time_3 = list(members_sorted_afk_num.values())[0].num_of_afk)
+		1. {user_1}: {t} gånger\n\
+		2. {user_2}: {t} gånger\n\
+		3. {user_3}: {t} gånger\n".format(\
+			user_1 = users_afk[-1].user_str, t = users_afk[-1].num_of_afk,\
+			user_2 = users_afk[-2].user_str, t = users_afk[-2].num_of_afk,\
+			user_3 = users_afk[-3].user_str, t = users_afk[-3].num_of_afk)
 			
-	message_to_send = message_tot_time + "\n" + message_avg_time + "\n" + message_afk_num
+	message_to_send = message_tot_time + "\n" + message_avg_time + "\n" + message_str_time + "\n" + message_afk_num
 	await ctx.send(message_to_send)
 
 def read_stats():
