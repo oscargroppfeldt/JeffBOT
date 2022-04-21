@@ -98,7 +98,7 @@ async def on_ready():
 	print(bot.user.name)
 	print(bot.user.id)
 	print('------')
-	read_stats()
+	await read_stats()
 	await save_stats()
 
 
@@ -140,7 +140,7 @@ async def on_voice_state_update(user: discord.Member, before, after):
 	elif before.channel is not None and after.channel is None:
 		stats = user_stats[user.id]
 		time_stamp = time.time()
-		stats.time_spent_in_discord += time_stamp - stats.last_join_time
+		stats.time_spent_in_discord_seconds += time_stamp - stats.last_join_time
 		stats.avg_time_per_session_seconds = stats.time_spent_in_discord_seconds / stats.times_joined
 	
 	elif before.channel is not None and after.afk:
@@ -372,26 +372,30 @@ async def leaderboard(ctx):
 	message_to_send = message_tot_time + "\n" + message_avg_time + "\n" + message_str_time + "\n" + message_afk_num
 	await ctx.send(message_to_send)
 
-def read_stats():
+async def read_stats():
+	
 
+	guild_id = 668194960637558784
+	guild = bot.get_guild(guild_id)
+	
 	with open("stats.txt", 'r') as stat_file:
-		contents = stat_file.read().split(',\n')
+		contents = stat_file.read().split(',\n')[:-1]
 		if len(contents) % 9 != 0:
 			log.log("Error when reading stats.txt")
 
-		for i in range(len(contents)/9): #Every MemberStat has 9 attributes
+		for i in range(len(contents)//9): #Every MemberStat has 9 attributes
 
 			# Get MemberStat attributes
-			discordMemberInstance = bot.get_user(contents[i])
+			discordMemberInstance = await guild.fetch_member(int(contents[9*i]))
 			user = MemberStat(discordMemberInstance)
-			user.times_joined = int(contents[i+1])
-			user.time_spent_in_discord_seconds = int(contents[i+2])
-			user.avg_time_per_session_seconds = int(contents[i+3])
-			user.num_of_afk = int(contents[i+4])
-			user.last_join_time = int(contents[i+5])
-			user.messages_sent = int(contents[i+6])
-			user.last_stream_time = int(contents[i+7])
-			user.time_spent_streaming = int(contents[i+8])
+			user.times_joined = int(contents[9*i+1])
+			user.time_spent_in_discord_seconds = float(contents[9*i+2])
+			user.avg_time_per_session_seconds = float(contents[9*i+3])
+			user.num_of_afk = int(contents[9*i+4])
+			user.last_join_time = float(contents[9*i+5])
+			user.messages_sent = int(contents[9*i+6])
+			user.last_stream_time = float(contents[9*i+7])
+			user.time_spent_streaming = float(contents[9*i+8])
 
 			user_stats[contents[i]] = user
 
