@@ -55,13 +55,13 @@ class MemberStat:
 	def get_user_stats_csv(self):
 		res = f"{self.member.id},\n"
 		res += f"{self.times_joined},\n"
-		res += f"{self.time_spent_in_discord_seconds}\n"
-		res += f"{self.avg_time_per_session_seconds}\n"
-		res += f"{self.num_of_afk}\n"
-		res += f"{self.last_join_time}\n"
-		res += f"{self.messages_sent}\n"
-		res += f"{self.last_stream_time}\n"
-		res += f"{self.time_spent_streaming}\n"
+		res += f"{self.time_spent_in_discord_seconds},\n"
+		res += f"{self.avg_time_per_session_seconds},\n"
+		res += f"{self.num_of_afk},\n"
+		res += f"{self.last_join_time},\n"
+		res += f"{self.messages_sent},\n"
+		res += f"{self.last_stream_time},\n"
+		res += f"{self.time_spent_streaming},\n"
 		return res
 	
 	def update_user_time(self):
@@ -136,8 +136,14 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		stats.times_joined += 1
 		join_time = time.time()
 		stats.last_join_time = join_time
+
+	elif before.channel is not None and after.channel is None:
+		stats = user_stats[user.id]
+		time_stamp = time.time()
+		stats.time_spent_in_discord += time_stamp - stats.last_join_time
+		stats.avg_time_per_session_seconds = stats.time_spent_in_discord_seconds / stats.times_joined
 	
-	elif before.channel is not None and after.afk or None:
+	elif before.channel is not None and after.afk:
 		stats = user_stats[user.id]
 		stats.num_of_afk += 1
 		afk_time = time.time()
@@ -150,12 +156,13 @@ async def on_voice_state_update(user: discord.Member, before, after):
 		join_time = time.time()
 		stats.last_join_time = join_time
 
+
 	elif not before.afk and after.channel is None:
 		stats = user_stats[user.id]
 		time_delta = time.time() - stats.last_join_time
 		stats.time_spent_in_discord_seconds += time_delta
 		if before.self_stream:
-			stream_time_delta = time.time() - self.last_stream_time
+			stream_time_delta = time.time() - stats.last_stream_time
 			stats.time_spent_streaming += stream_time_delta
 
 
@@ -370,8 +377,8 @@ def read_stats():
 	with open("stats.txt", 'r') as stat_file:
 		contents = stat_file.read().split(',\n')
 		if len(contents) % 9 != 0:
-			log.log("Error when reading stat.csv")
-			return
+			log.log("Error when reading stats.txt")
+
 		for i in range(len(contents)/9): #Every MemberStat has 9 attributes
 
 			# Get MemberStat attributes
@@ -397,7 +404,7 @@ async def save_stats():
 		with open("stats.txt", 'w+') as stat_file:
 			for user in user_stats.values():
 				stat_file.write(user.get_user_stats_csv())
-				log.log("Saved stats to file")
+			log.log("Saved stats to file")
 
 		await asyncio.sleep(900) #sleep for 900s (15 min)
 
