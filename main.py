@@ -320,12 +320,12 @@ async def leaderboard(ctx):
 	time3 = seconds_converter(users_tot[-3].time_spent_in_discord_seconds)
 
 	message_tot_time = "____ Trogna nördar ____\n \
-		1. {user_1}: {h} timmar och {m} minuter\n\
-		2. {user_2}: {h} timmar och {m} minuter\n\
-		3. {user_3}: {h} timmar och {m} minuter\n".format(\
-			user_1 = users_tot[-1].user_str, h = time1[2], m = time1[1],\
-			user_2 = users_tot[-2].user_str, h = time2[2], m = time2[1],\
-			user_3 = users_tot[-3].user_str, h = time3[2], m = time3[1])
+		1. {user_1}: {h1} timmar och {m1} minuter\n\
+		2. {user_2}: {h2} timmar och {m2} minuter\n\
+		3. {user_3}: {h3} timmar och {m3} minuter\n".format(\
+			user_1 = users_tot[-1].user_str, h1 = time1[2], m1 = time1[1],\
+			user_2 = users_tot[-2].user_str, h2 = time2[2], m2 = time2[1],\
+			user_3 = users_tot[-3].user_str, h3 = time3[2], m3 = time3[1])
 
 	# AVERAGE TIME
 	time1 = seconds_converter(users_avg[-1].avg_time_per_session_seconds)
@@ -333,12 +333,12 @@ async def leaderboard(ctx):
 	time3 = seconds_converter(users_avg[-3].avg_time_per_session_seconds)
 
 	message_avg_time = "____ Fyrkantiga ögon ____\n \
-		1. {user_1}: {h} timmar och {m} minuter\n\
-		2. {user_2}: {h} timmar och {m} minuter\n\
-		3. {user_3}: {h} timmar och {m} minuter\n".format(\
-			user_1 = users_avg[-1].user_str, h = time1[2], m = time1[1],\
-			user_2 = users_avg[-2].user_str, h = time2[2], m = time2[1],\
-			user_3 = users_avg[-3].user_str, h = time3[2], m = time3[1])
+		1. {user_1}: {h1} timmar och {m1} minuter\n\
+		2. {user_2}: {h2} timmar och {m2} minuter\n\
+		3. {user_3}: {h3} timmar och {m3} minuter\n".format(\
+			user_1 = users_avg[-1].user_str, h1 = time1[2], m1 = time1[1],\
+			user_2 = users_avg[-2].user_str, h2 = time2[2], m2 = time2[1],\
+			user_3 = users_avg[-3].user_str, h3 = time3[2], m3 = time3[1])
 
 	# STREAM TIME
 	time1 = seconds_converter(users_str[-1].time_spent_streaming)
@@ -346,21 +346,21 @@ async def leaderboard(ctx):
 	time3 = seconds_converter(users_str[-3].time_spent_streaming)
 	
 	message_str_time = "____ Streamers ____\n \
-		1. {user_1}: {h} timmar och {m} minuter\n\
-		2. {user_2}: {h} timmar och {m} minuter\n\
-		3. {user_3}: {h} timmar och {m} minuter\n".format(\
-			user_1 = users_str[-1].user_str, h = time1[2], m = time1[1],\
-			user_2 = users_str[-2].user_str, h = time2[2], m = time2[1],\
-			user_3 = users_str[-3].user_str, h = time3[2], m = time3[1])
+		1. {user_1}: {h1} timmar och {m1} minuter\n\
+		2. {user_2}: {h2} timmar och {m2} minuter\n\
+		3. {user_3}: {h3} timmar och {m3} minuter\n".format(\
+			user_1 = users_str[-1].user_str, h1 = time1[2], m1 = time1[1],\
+			user_2 = users_str[-2].user_str, h2 = time2[2], m2 = time2[1],\
+			user_3 = users_str[-3].user_str, h3 = time3[2], m3 = time3[1])
 
 	# NUM OF AFKS AND BONKS
 	message_afk_num = "____ \"BRB runka\" ____\n \
-		1. {user_1}: {t} gånger\n\
-		2. {user_2}: {t} gånger\n\
-		3. {user_3}: {t} gånger\n".format(\
-			user_1 = users_afk[-1].user_str, t = users_afk[-1].num_of_afk,\
-			user_2 = users_afk[-2].user_str, t = users_afk[-2].num_of_afk,\
-			user_3 = users_afk[-3].user_str, t = users_afk[-3].num_of_afk)
+		1. {user_1}: {t1} gånger\n\
+		2. {user_2}: {t2} gånger\n\
+		3. {user_3}: {t3} gånger\n".format(\
+			user_1 = users_afk[-1].user_str, t1 = users_afk[-1].num_of_afk,\
+			user_2 = users_afk[-2].user_str, t2 = users_afk[-2].num_of_afk,\
+			user_3 = users_afk[-3].user_str, t3 = users_afk[-3].num_of_afk)
 			
 	message_to_send = message_tot_time + "\n" + message_avg_time + "\n" + message_str_time + "\n" + message_afk_num
 	await ctx.send(message_to_send)
