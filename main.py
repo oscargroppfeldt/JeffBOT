@@ -220,10 +220,6 @@ async def bonk(ctx, user_str):
 		await ctx.send(f"Du bör passa dig jävligt noga nu {ctx.message.author.name.split('#')[0]}.")
 		return
 	
-	await ctx.author.voice.channel.connect()
-
-	play_audio(ctx, "bonk")
-	
 	voice_state = user.voice
 	try:
 		if voice_state is None:
@@ -238,11 +234,16 @@ async def bonk(ctx, user_str):
 			else:
 				await ctx.send(f"Nu jävlar ska {str(user).split('#')[0]} få lär kännna mig lite bättre.")
 				await user.move_to(ctx.guild.afk_channel)
+				
+		await ctx.author.voice.channel.connect()
+
+		play_audio(ctx, "bonk")
+		
+		await ctx.voice_client.disconnect()
+
 	except discord.ext.commands.errors.MemberNotFound:
 		await ctx.send("Vem fan är det?")
 	
-	await ctx.voice_client.disconnect()
-
 
 # Adds an alias for user
 @bot.command()
